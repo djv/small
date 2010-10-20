@@ -1,0 +1,46 @@
+#!/usr/bin/python
+import subprocess
+import tempfile
+import os
+import sys
+
+def confirm(prompt=None, resp=False):
+    if prompt is None:
+        prompt = 'Confirm'
+
+    if resp:
+        prompt = '%s [%s]|%s: ' % (prompt, 'y', 'n')
+    else:
+        prompt = '%s [%s]|%s: ' % (prompt, 'n', 'y')
+
+    while True:
+        ans = raw_input(prompt)
+        if not ans:
+            return resp
+        if ans not in ['y', 'Y', 'n', 'N']:
+            print 'please enter y or n.'
+            continue
+        if ans == 'y' or ans == 'Y':
+            return True
+        if ans == 'n' or ans == 'N':
+            return False
+
+if confirm("reload history?"):
+    pass
+else:
+    os.execvp("ghci", sys.argv)
+
+hist = open("/home/dan/.ghc/ghci_history").readlines()
+hist2 = reversed(map((lambda l : 'send {' + l[:-1] + '}\nsend "\r"'), hist))
+prompt = 'expect ">"'
+hist3 = "spawn ghci " + ' '.join(sys.argv[1:]) + "\n" + prompt + "\n" + ("\n"+prompt+"\n").join(hist2) + "\ninteract"
+
+(_,f) = tempfile.mkstemp()
+temp = open(f,'w')
+temp.write(hist3)
+temp.close()
+#print hist3
+
+subprocess.call(["expect", f])
+
+os.remove(f)
