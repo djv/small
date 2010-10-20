@@ -1,0 +1,9 @@
+hghci
+-----
+
+Replays your ghci history taken from "~/.ghc/ghci_history". Calling "hghci arg1 arg2 .." will prompt if you want to replay the history and then exec "ghci arg1 arg2 ..".
+
+tidy
+----
+
+Automatically formats a Haskell source file by parsing and printing it to stdout.
