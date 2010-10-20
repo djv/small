@@ -30,7 +30,7 @@ if confirm("reload history?"):
 else:
     os.execvp("ghci", sys.argv)
 
-hist = open("/home/dan/.ghc/ghci_history").readlines()
+hist = open(os.path.expanduser("~/.ghc/ghci_history")).readlines()
 hist2 = reversed(map((lambda l : 'send {' + l[:-1] + '}\nsend "\r"'), hist))
 prompt = 'expect ">"'
 hist3 = "spawn ghci " + ' '.join(sys.argv[1:]) + "\n" + prompt + "\n" + ("\n"+prompt+"\n").join(hist2) + "\ninteract"
