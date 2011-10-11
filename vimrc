@@ -5,6 +5,16 @@
 "              If you're a more advanced user, building your own .vimrc based
 "              on this file is still a good idea.
 
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+
+" CommandT plugin
+noremap <C-F> <Esc>:CommandT<CR>
+
+" Tagbar
+let g:tagbar_usearrows = 1
+nnoremap <leader>l :TagbarToggle<CR>
+
 "------------------------------------------------------------
 " Features {{{1
 "
@@ -19,6 +29,7 @@ set nocompatible
 " contents.  Use this to allow intelligent auto-indenting for each filetype,
 " and for plugins that are filetype specific.
 filetype indent plugin on
+filetype on
 
 " Enable syntax highlighting
 syntax on
@@ -39,7 +50,7 @@ set hidden
 set wildmenu
 set wildmode=longest:full,full
 
-set completeopt=menu,preview,longest
+set completeopt=menuone,longest,preview
 
 " Show partial commands in the last line of the screen
 set showcmd
@@ -56,6 +67,10 @@ set incsearch       " While typing a search command, show immediately where the
 " script, <http://www.vim.org/scripts/script.php?script_id=1876>.
 " set nomodeline
 
+
+set shiftwidth=4
+set softtabstop=2
+set expandtab
 
 "------------------------------------------------------------
 " Usability options {{{1
@@ -118,23 +133,6 @@ set notimeout ttimeout ttimeoutlen=200
 
 
 "------------------------------------------------------------
-" Indentation options {{{1
-"
-" Indentation settings according to personal preference.
-
-" Indentation settings for using 2 spaces instead of tabs.
-" Do not change 'tabstop' from its default value of 8 with this setup.
-set shiftwidth=2
-set softtabstop=2
-set expandtab
-
-" Indentation settings for using hard tabs for indent. Display tabs as
-" two characters wide.
-"set shiftwidth=2
-"set tabstop=2
-
-
-"------------------------------------------------------------
 " Mappings {{{1
 "
 " Useful mappings
@@ -163,26 +161,12 @@ set textwidth=78    " Maximum width of text that is being inserted. A longer
 " t - autowrap TEXT using textwidth
 set fo=croqnvt
 
-autocmd FileType omlet nmap <F3> :exec 'echomsg (system("~/.vim/scripts/ocaml.annot.pl' bufname('%') (line2byte(line('.'))+col('.')-1) '"))'<RETURN> 
-autocmd FileType omlet nmap <F4> :call AutoType()<CR>
-set makeprg=omake
-map <F5> :make<RETURN>
-au BufNewFile,BufRead *.ml,*.mli,*.mll,*.mly set expandtab hidden autowrite efm=%+AFile\ \"%f\"\\,\ line\ %l\\,\ characters\ %c-%*\\d:,%Z%m 
-
-fun SetupVAM()
-  set runtimepath+=~/vim-addons/vim-addon-manager
-  call vam#ActivateAddons([])
-endf
-call SetupVAM()
-" experimental: run after gui has been started [3]
-" option1: au VimEnter * call SetupVAM()
-" option2: au GUIEnter * call SetupVAM()
+au FileType python set omnifunc=pythoncomplete#Complete
 
 :noremap    <Right>    :bn<CR>
 :noremap    <Left>     :bp<CR>
 
 set t_Co=256
-set background=dark
 colors leo
 
 function! AutoType()
@@ -190,3 +174,18 @@ function! AutoType()
   execute setline('.',newline)
 endfunction
 
+map <F6> :GundoToggle<CR>
+
+let g:SuperTabDefaultCompletionType = "context"
+
+set foldmethod=indent
+set foldlevel=99
+
+map <c-j> <c-w>j
+map <c-k> <c-w>k
+map <c-l> <c-w>l
+map <c-h> <c-w>h
+
+map <leader>td <Plug>TaskList
+
+let g:pep8_map='<F8>'
