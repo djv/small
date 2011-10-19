@@ -68,10 +68,6 @@ set incsearch       " While typing a search command, show immediately where the
 " set nomodeline
 
 
-set shiftwidth=4
-set softtabstop=2
-set expandtab
-
 "------------------------------------------------------------
 " Usability options {{{1
 "
@@ -130,6 +126,23 @@ set notimeout ttimeout ttimeoutlen=200
 
 " Use <F11> to toggle between 'paste' and 'nopaste'
 "set pastetoggle=<F11>
+
+
+"------------------------------------------------------------
+" Indentation options {{{1
+"
+" Indentation settings according to personal preference.
+
+" Indentation settings for using 2 spaces instead of tabs.
+" Do not change 'tabstop' from its default value of 8 with this setup.
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+
+" Indentation settings for using hard tabs for indent. Display tabs as
+" two characters wide.
+"set shiftwidth=2
+"set tabstop=2
 
 
 "------------------------------------------------------------
