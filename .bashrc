@@ -141,6 +141,9 @@ alias c='cd'
 alias v='vim'
 alias r='rm'
 alias g='grep'
+alias t='tail'
+alias h='head'
+alias w='wc -l'
 
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
